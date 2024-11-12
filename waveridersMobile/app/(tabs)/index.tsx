@@ -7,7 +7,7 @@ const INITIAL_REGION = {
   latitude: 41.01,
   longitude: 28.97,
   latitudeDelta: 2,
-  longitudeDelta: 2
+  longitudeDelta: 3
 }
 
 const Page = () => {
