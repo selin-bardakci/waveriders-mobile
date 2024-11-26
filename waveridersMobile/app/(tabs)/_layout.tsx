@@ -6,10 +6,11 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 const Layout = () => {
     return <Tabs screenOptions={{
-        tabBarActiveTintColor: Colors.primary,
+        tabBarActiveTintColor: Colors.dark,
         tabBarLabelStyle: {
             fontFamily: 'mon-sb'
         }
@@ -20,8 +21,13 @@ const Layout = () => {
         }}/>
 
         <Tabs.Screen name="favorites" options={{
-            tabBarLabel: 'Favorites',
-            tabBarIcon: ({color, size}) => <AntDesign name="heart" color={color} size={size}/>
+            tabBarLabel: 'Wishlists',
+            tabBarIcon: ({color, size}) => <FontAwesome6 name="heart" size={24} color={color}/>
+        }}/>
+
+        <Tabs.Screen name="trips" options={{
+            tabBarLabel: 'Trips',
+            tabBarIcon: ({color, size}) => <MaterialCommunityIcons name="bed-outline" size={24} color={color}/>
         }}/>
 
         <Tabs.Screen name="inbox" options={{
