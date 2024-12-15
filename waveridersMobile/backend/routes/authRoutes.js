@@ -15,7 +15,10 @@ import {
   getBusiness,
   getUser,
   getBusinessID,
-  getBoatWithID
+  getBoatWithID,
+  addFavorite,
+  getFavorites,
+  removeFavorite
 } from '../controllers/authController.js';
 
 const router = express.Router();
@@ -69,6 +72,10 @@ router.get('/captain', getCaptain);
 router.get('/user', getUser);
 router.get('/businessID', getBusinessID);
 router.get('/boat/:id', getBoatWithID);
+
+router.post('/favorites', addFavorite);
+router.get('/favorites', getFavorites);
+router.delete('/favorites/:favorite_id', removeFavorite);
 // Login route
 router.post('/login', loginUser);
 
