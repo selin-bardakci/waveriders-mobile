@@ -91,7 +91,7 @@ const Listing = () => {
           style={styles.image}
         />
         <Text style={styles.title}>{item.boat_name}</Text>
-        <Text style={styles.price}>${item.boat_price_per_hour} per hour</Text>
+        <Text style={styles.price}>${item.price_per_hour} per hour</Text>
         <TouchableOpacity 
           style={styles.button} 
           onPress={() => {
