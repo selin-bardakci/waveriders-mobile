@@ -9,6 +9,7 @@ import path from 'path';
 import { uploadToS3 } from '../config/s3.js';
 import jwt from 'jsonwebtoken';
 import fs from 'fs/promises';
+import { Favorites } from '../models/favoritesModel.js';
 
 
 
@@ -457,5 +458,62 @@ export const getBusinessID = (req, res) => {
       return res.status(500).json({ message: 'Error fetching business ID' });
     }
       res.status(200).json({ business_id: result[0].business_id });
+  });
+};
+
+// Add a favorite
+export const addFavorite = (req, res) => {
+  const { user_id, boat_id } = req.body;
+
+  if (!user_id || !boat_id) {
+    return res.status(400).json({ message: 'User ID and Boat ID are required' });
+  }
+
+  Favorites.createFavorite(db, { user_id, boat_id }, (err, result) => {
+    if (err) {
+      console.error('Error adding favorite:', err);
+      return res.status(500).json({ message: 'Server error' });
+    }
+
+    res.status(201).json({ message: 'Favorite added successfully', favorite_id: result.insertId });
+  });
+};
+
+// Get all favorites for a user
+export const getFavorites = (req, res) => {
+  const { user_id } = req.query;
+
+  if (!user_id) {
+    return res.status(400).json({ message: 'User ID is required' });
+  }
+
+  Favorites.getFavoritesByUser(db, user_id, (err, results) => {
+    if (err) {
+      console.error('Error fetching favorites:', err);
+      return res.status(500).json({ message: 'Error fetching favorites' });
+    }
+
+    res.status(200).json({ favorites: results });
+  });
+};
+
+export const removeFavorite = (req, res) => {
+  const { favorite_id } = req.params; // Extract favorite_id from URL parameters
+
+  if (!favorite_id) {
+    return res.status(400).json({ message: 'Favorite ID is required' });
+  }
+
+  Favorites.deleteFavorite(db, favorite_id, (err, result) => {
+    if (err) {
+      console.error('Error removing favorite:', err);
+      return res.status(500).json({ message: 'Server error' });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Favorite not found' });
+    }
+
+    res.status(200).json({ message: 'Favorite removed successfully' });
   });
 };
