@@ -279,11 +279,20 @@ export const loginUser = async (req, res) => {
         return res.status(401).json({ message: 'Invalid email or password' });
       }
 
-      const token = jwt.sign(
-        { id: user.user_id, email: user.email, account_type: user.account_type }, 
-        process.env.JWT_SECRET, 
-        { expiresIn: '1h' } 
-      );
+      const generateToken = (user) => {
+        const secret = process.env.JWT_SECRET;
+          if (!secret) {
+             throw new Error('JWT_SECRET environment variable is missing');
+         }
+    
+          return jwt.sign(
+             { id: user.id, email: user.email, account_type: user.account_type },
+             secret,
+              { expiresIn: '1h' } // Token geçerlilik süresi
+          );
+      };
+
+      const token = jwt.sign({ id: user.id, email: user.email, account_type: user.account_type }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
      
       console.log('Login successful for user:', {
