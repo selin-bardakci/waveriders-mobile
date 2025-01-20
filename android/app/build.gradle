@@ -1,7 +1,28 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+project.ext.vectoricons = [
+    iconFontNames: [
+        'AntDesign.ttf',
+        'Entypo.ttf',
+        'EvilIcons.ttf',
+        'Feather.ttf',
+        'FontAwesome.ttf',
+        'FontAwesome5_Brands.ttf',
+        'FontAwesome5_Regular.ttf',
+        'FontAwesome5_Solid.ttf',
+        'Foundation.ttf',
+        'Ionicons.ttf',
+        'MaterialIcons.ttf',
+        'MaterialCommunityIcons.ttf',
+        'SimpleLineIcons.ttf',
+        'Octicons.ttf',
+        'Zocial.ttf',
+        'Fontisto.ttf'
+    ]
+]
 
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -84,28 +105,34 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+
     }
+
+
     signingConfigs {
-        debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+        release {
+            storeFile file("my-release-key.jks") // Ensure the file path is correct
+            storePassword "Waveriders12345" // Use environment variables for security in production
+            keyAlias "my-key-alias"
+            keyPassword "Waveriders12345"
         }
     }
+
     buildTypes {
-        debug {
-            signingConfig signingConfigs.debug
-        }
+
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
 }
+
+
 
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin

@@ -1,0 +1,34 @@
+/* FilterSidebar.css */
+.horizontal-slider {
+    width: 100%;
+    height: 5px;
+    position: relative;
+  }
+  
+  /* Gray track outside the selected range */
+  .track {
+    background: #d3d3d3;
+    height: 100%;
+    border-radius: 999px;
+    position: absolute;
+  }
+  
+  /* Blue track between the two handles */
+  .track-0 {
+    background: #3B82F6; /* Light blue for the active range */
+    height: 100%;
+    border-radius: 999px;
+  }
+  
+  /* Thumb styles for the handles */
+  .thumb {
+    height: 15px;
+    width: 15px;
+    background-color: #3B82F6;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+    position: relative;
+    top: -5px; /* Centering the thumb */
+  }
+  
